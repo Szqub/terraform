@@ -913,7 +913,12 @@ c =   "y"
 
 		// The symlinked file has been formatted
 		view, done = testView(t)
-		c.Meta.View = view
+		c = &FmtCommand{
+			Meta: Meta{
+				View:       view,
+				WorkingDir: workingDir,
+			},
+		}
 		args := []string{
 			"-no-color",
 			"-check",
@@ -997,7 +1002,12 @@ c =   "y"
 
 		// The symlinked file has been formatted
 		view, done = testView(t)
-		c.Meta.View = view
+		c = &FmtCommand{
+			Meta: Meta{
+				View: view,
+				// Not setting WorkingDir
+			},
+		}
 		args = []string{
 			"-no-color",
 			"-check",

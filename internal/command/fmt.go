@@ -43,7 +43,7 @@ type FmtCommand struct {
 	recursive bool
 	input     io.Reader // STDIN if nil
 
-	// Set to true if any formatting changes were encountered during the run.
+	// Set to true by the command if any formatting changes were encountered during the run.
 	formatChangesEncountered bool
 }
 
