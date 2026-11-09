@@ -733,10 +733,7 @@ func TestFmt_check(t *testing.T) {
 		}
 	})
 
-	t.Run("combining -diff and -list=false options result in no output", func(t *testing.T) {
-		// Output is conditional on the -list flag, which is disabled here. However -diff also
-		// produces output and is currently only able to be displayed when -list is also enabled.
-
+	t.Run("combining -diff and -list=false options", func(t *testing.T) {
 		t.Parallel()
 		tempDir := fmtFixtureWriteDir(t)
 
@@ -758,7 +755,13 @@ func TestFmt_check(t *testing.T) {
 			t.Fatalf("wrong exit code. expected 3")
 		}
 
-		expectedOutput := ""
+		tempDir = c.normalizePath(tempDir)
+		expectedOutput := fmt.Sprintf(`--- old/%s/main.tf
++++ new/%s/main.tf
+@@ -1 +1 @@
+-  foo  =  "bar"
++foo = "bar"
+`, tempDir, tempDir)
 
 		output := done(t)
 		if actual := output.Stdout(); actual != expectedOutput {
